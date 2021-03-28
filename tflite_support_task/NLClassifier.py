@@ -23,7 +23,7 @@ class NLClassifier:
   def Classify(self,input):
       self.sharedLib.InvokeRunInference.restype = None
       self.sharedLib.InvokeRunInference.argtypes = ctypes.c_int, ctypes.POINTER(ctypes.c_char_p)
-      args = (ctypes.c_char_p * 4)(bytes(input, encoding='utf-8'))
+      args = (ctypes.c_char_p * 1)(bytes(input, encoding='utf-8'))
       self.sharedLib.InvokeRunInference(len(args),args)
       return input  
 
