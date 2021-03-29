@@ -18,7 +18,7 @@ Currently TensorFlow Lite Task Library for Python is only supported  Natural Lan
 
 `NLClassifier`  API is able to load any TFLite models for natural language classaification task such as language detection or sentiment detection.
 
-    classifier = NLClassifier.CreateFromFileAndOptions(model_path, kInputTensorName,kOutputScoreTensorName)
+    classifier = NLClassifier.CreateFromFileAndOptions(model_path, kInputTensorName, kOutputScoreTensorName)
     categories = classifier.Classify(kInput)
 
 ### BertNLClassifier
