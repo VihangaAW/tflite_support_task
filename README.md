@@ -9,21 +9,15 @@ Currently TensorFlow Lite Task Library for Python is only supported  Natural Lan
 
 ### QuestionAnswerer
 
-`QuestionAnswerer`  API is able to load  [Mobile BERT](https://tfhub.dev/tensorflow/mobilebert/1)  or  [AlBert](https://tfhub.dev/tensorflow/albert_lite_base/1)  TFLite models and answer question based on context.
-
     answerer = BertQuestionAnswerer.CreateFromFile(model_path)
     answers = answerer.Answer(context_of_question, question_to_ask)
 
 ### NLClassifier
 
-`NLClassifier`  API is able to load any TFLite models for natural language classaification task such as language detection or sentiment detection.
-
     classifier = NLClassifier.CreateFromFileAndOptions(model_path, kInputTensorName, kOutputScoreTensorName)
     categories = classifier.Classify(kInput)
 
 ### BertNLClassifier
-
-`BertNLClassifier`  API is very similar to the  `NLClassifier`  that classifies input text into different categories, except that this API is specially tailored for Bert related models that require Wordpiece and Sentencepiece tokenizations outside the TFLite model.
 
     classifier = BertNLClassifier.CreateFromFile(model_path)
     categories = classifier.Classify(kInput)
