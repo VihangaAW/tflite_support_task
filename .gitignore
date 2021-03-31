@@ -1,2 +1,5 @@
 tflite_support_task/__pycache__
 tests/__pychache__
+dist/
+tflite_support_task.egg-info/
+build/

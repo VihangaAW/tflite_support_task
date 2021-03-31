@@ -15,30 +15,59 @@ class NLClassifier:
     self.sharedLib.InvokeInitializeModel(len(args),args)
 
 
-
   @classmethod
   def CreateFromFileAndOptions(cls, model_path, input_tensor_name, output_score_tensor_name):
+      """
+
+      CreateFromFileAndOptions is used to invoke the interpreter.
+
+      Parameters:
+      model_path               (string): tflite model path 
+      input_tensor_name        (string): input tensor name
+      output_score_tensor_name (string): output tensor name
+      
+      Returns: 
+      NLClassifier: object 
+
+      """
       return cls(model_path, input_tensor_name, output_score_tensor_name)
 
   def Classify(self,input):
-      self.sharedLib.InvokeRunInference.restype = None
+      """
+
+      Classify is used to execute the model with not preprocessed input and get the output.
+
+      Parameters: 
+      input                   (string): input text
+
+      Returns
+      list 
+
+      """
+
+      self.sharedLib.InvokeRunInference.restype = ctypes.c_char_p
       self.sharedLib.InvokeRunInference.argtypes = ctypes.c_int, ctypes.POINTER(ctypes.c_char_p)
+
+      string_buffers = [ctypes.create_string_buffer(8) for i in range(4)]
+      pointers = (ctypes.c_char_p*4)(*map(ctypes.addressof, string_buffers))
+
       args = (ctypes.c_char_p * 1)(bytes(input, encoding='utf-8'))
-      self.sharedLib.InvokeRunInference(len(args),args)
-      return input  
+      # Run the inference
+      self.sharedLib.InvokeRunInference(len(args),args, pointers)
+      results = [(s.value).decode('utf-8') for s in string_buffers]
+      return results  
 
+
+# Testing
 timeStart = time.time()
-a = NLClassifier.CreateFromFileAndOptions("/tmp/movie_review.tflite","input_text","probability")
+nlClassifier = NLClassifier.CreateFromFileAndOptions("/tmp/movie_review.tflite","input_text","probability")
 timeEnd = time.time()
 executedTime = timeEnd-timeStart
-print(str(executedTime*1000)+" milliseconds")
+print("Time spent for loading the model    : " + str(executedTime*1000)+" milliseconds")
 
 timeStart = time.time()
-b = a.Classify("It was a great movie")
+output = nlClassifier.Classify("It was a great movie")
 timeEnd = time.time()
 executedTime = timeEnd-timeStart
-print(str(executedTime*1000)+" milliseconds")
-print(str(b))
-
-print(a.model_path)      
-print(a.Classify("Hello World"))
+print("Time spent for running the inference: " + str(executedTime*1000)+" milliseconds")
+print("Output: " + str(output))
