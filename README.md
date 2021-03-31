@@ -1,6 +1,6 @@
 # TensorFlow Lite Task Library for Python
 
-TensorFlow Lite Task Library for Python is a Python wrapper for Google's [TensorFlow Lite Task Library](https://github.com/tensorflow/tflite-support/tree/master/tensorflow_lite_support/cc/task). The wrapper is developed around C++ version of the TensorFlow Lite Task Library.
+TensorFlow Lite Task Library for Python is a Python wrapper for Google's [TensorFlow Lite Task Library](https://github.com/tensorflow/tflite-support/tree/master/tensorflow_lite_support/cc/task). The wrapper is based on the C++ version of the TensorFlow Lite Task Library.
 
 ## Supported Tasks
 Currently TensorFlow Lite Task Library for Python is only supported  Natural Language (NL) APIs provided by the official task library.
