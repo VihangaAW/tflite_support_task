@@ -53,7 +53,7 @@ class NLClassifier:
 
       args = (ctypes.c_char_p * 1)(bytes(input, encoding='utf-8'))
       # Run the inference
-      self.sharedLib.InvokeRunInference(len(args),args, pointers)
+      self.sharedLib.InvokeRunInference(len(args), args, pointers)
       results = [(s.value).decode('utf-8') for s in string_buffers]
       return results  
 

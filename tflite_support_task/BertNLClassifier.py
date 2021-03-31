@@ -16,27 +16,52 @@ class BertNLClassifier:
 
   @classmethod
   def CreateFromFile(cls, model_path):
+      """
+
+      CreateFromFile is used to invoke the interpreter.
+
+      Parameters:
+      model_path               (string): tflite model path 
+      
+      Returns: 
+      BertNLClassifier: object 
+
+      """
       return cls(model_path)
 
   def Classify(self,input):
-      self.sharedLib.InvokeRunInference.restype = None
+      """
+
+      Classify is used to execute the model with not preprocessed input and get the output.
+
+      Parameters: 
+      input                   (string): input text
+
+      Returns
+      list 
+
+      """
+      self.sharedLib.InvokeRunInference.restype = ctypes.c_char_p
       self.sharedLib.InvokeRunInference.argtypes = ctypes.c_int, ctypes.POINTER(ctypes.c_char_p)
+
+      string_buffers = [ctypes.create_string_buffer(8) for i in range(4)]
+      pointers = (ctypes.c_char_p*4)(*map(ctypes.addressof, string_buffers))
+      # Run the inference
       args = (ctypes.c_char_p * 1)(bytes(input, encoding='utf-8'))
-      self.sharedLib.InvokeRunInference(len(args),args)
-      return input  
+      self.sharedLib.InvokeRunInference(len(args), args, pointers)
+      results = [(s.value).decode('utf-8') for s in string_buffers]
+      return results  
 
+# Testing
 timeStart = time.time()
-a = BertNLClassifier.CreateFromFile("/tmp/movie_review.tflite")
+bertNLClassifier = BertNLClassifier.CreateFromFile("/tmp/mobilebert_quantized.tflite")
 timeEnd = time.time()
 executedTime = timeEnd-timeStart
-print(str(executedTime*1000)+" milliseconds")
+print("Time spent for loading the model    : " + str(executedTime*1000)+" milliseconds")
 
 timeStart = time.time()
-b = a.Classify("It was a great movie")
+output = bertNLClassifier.Classify("It was a great movie")
 timeEnd = time.time()
 executedTime = timeEnd-timeStart
-print(str(executedTime*1000)+" milliseconds")
-print(str(b))
-
-print(a.model_path)      
-print(a.Classify("Hello World"))
+print("Time spent for running the inference: " + str(executedTime*1000)+" milliseconds")
+print("Output: " + str(output))
