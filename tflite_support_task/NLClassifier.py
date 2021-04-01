@@ -6,7 +6,7 @@ class NLClassifier:
     self.model_path = model_path
     self.input_tensor_name = input_tensor_name
     self.output_score_tensor_name = output_score_tensor_name
-    self.sharedLib = ctypes.CDLL('tflite_support_task/assets/libinvoke_nl_classifier.so')
+    self.sharedLib = ctypes.CDLL('./assets/libinvoke_nl_classifier.so')
 
     # Initialize a classifier
     self.sharedLib.InvokeInitializeModel.restype = None

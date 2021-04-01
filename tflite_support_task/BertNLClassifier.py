@@ -4,7 +4,7 @@ import time
 class BertNLClassifier:
   def __init__(self, model_path):
     self.model_path = model_path
-    self.sharedLib = ctypes.CDLL('tflite_support_task/assets/libinvoke_bert_nl_classifier.so')
+    self.sharedLib = ctypes.CDLL('./assets/libinvoke_bert_nl_classifier.so')
 
     # Initialize a classifier
     self.sharedLib.InvokeInitializeModel.restype = None

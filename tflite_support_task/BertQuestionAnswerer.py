@@ -4,7 +4,7 @@ import time
 class BertQuestionAnswerer:
   def __init__(self, model_path):
     self.model_path = model_path
-    self.sharedLib = ctypes.CDLL('tflite_support_task/assets/libinvoke_bert_question_answerer.so')
+    self.sharedLib = ctypes.CDLL('./assets/libinvoke_bert_question_answerer.so')
 
     # Initialize a classifier
     self.sharedLib.InvokeInitializeModel.restype = None
