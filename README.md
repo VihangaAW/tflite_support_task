@@ -17,11 +17,11 @@ Currently TensorFlow Lite Task Library for Python is only supported  Natural Lan
     classifier = BertNLClassifier.CreateFromFile(model_path)
     categories = classifier.Classify(kInput)
 
-### QuestionAnswerer
+### QuestionAnswerer*
+*Development in Progress [QuestionAnswerer]. QuestionAnswerer can be used to print the output, currently it does not return values
 
     answerer = BertQuestionAnswerer.CreateFromFile(model_path)
     answers = answerer.Answer(context_of_question, question_to_ask)
-    *Development in Progress [QuestionAnswerer]. Currently QuestionAnswerer only prints the output. It does not return values
 
 ## Background
 
