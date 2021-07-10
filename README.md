@@ -25,4 +25,4 @@ Currently TensorFlow Lite Task Library for Python is only supported  Natural Lan
 
 ## Background
 
-This library uses shared libraries which are built using `bazel`.  C++ APIs developed to create shared libraries (.so files) can be found [here](https://github.com/VihangaAW/tflite-support).  To bridge C++ and Python APIs,  [ctypes](https://docs.python.org/3/library/ctypes.html) which is a foreign function library for Python is used.
+This library uses shared libraries which are built using `bazel`.  C++ APIs developed to create shared libraries (.so files) can be found [here](https://github.com/VihangaAW/tflite-support-experiment/tree/master/tensorflow_lite_support/examples/task/text/desktop).  To bridge C++ and Python APIs,  [ctypes](https://docs.python.org/3/library/ctypes.html) which is a foreign function library for Python is used.
